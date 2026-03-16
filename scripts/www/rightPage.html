@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      @font-face {
+        font-family: "dengkang-font";
+        src: url("./MEllePRC-Medium.otf");
+      }
+      .container {
+        width: 100%;
+        height: 100vh;
+        position: relative;
+        background: url("./images/rightPage/bg.jpg") no-repeat;
+        background-size: cover;
+        font-family: "dengkang-font";
+      }
+      .menus {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        column-gap: 0.23rem;
+      }
+      .menus .mitem {
+        height: 2.09rem;
+        width: 5.5rem;
+        border: 0.03rem solid #58c2d9;
+        border-radius: 1.045rem;
+        padding-top: 0.1rem;
+        background-color: rgba(255, 255, 255, 0.9);
+      }
+      .mitem .top {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.87rem;
+        color: #58c2d9;
+        position: relative;
+        margin-bottom: 0.1rem;
+      }
+      .mitem.Actv .top::before {
+        content: "";
+        width: 0.87rem;
+        height: 0.87rem;
+        top: 50%;
+        position: absolute;
+        left: 0.74rem;
+        transform: translateY(-50%);
+        background: url("./images/rightPage/check.png") no-repeat;
+        background-size: 100% 100%;
+      }
+      .mitem:nth-child(3).Actv .top::before {
+        left: 0.25rem;
+      }
+      .mitem:nth-child(3).Actv .top {
+        padding-left: 0.3rem;
+      }
+      .mitem .content {
+        font-size: 0.26rem;
+        color: #58c2d9;
+        text-align: center;
+        height: 0.7rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="menus">
+        <div class="mitem">
+          <div class="top">
+            <div class="name">抗敏</div>
+          </div>
+          <div class="content">
+            <p>（冷酸灵医研专效修护牙膏）</p>
+            <p>（冷酸灵专研抗敏（益生菌）牙膏）</p>
+          </div>
+        </div>
+        <div class="mitem">
+          <div class="top">
+            <div class="name">美白</div>
+          </div>
+          <div class="content">
+            <p>（冷酸灵极地白双重抗敏感牙膏）</p>
+          </div>
+        </div>
+        <div class="mitem">
+          <div class="top">
+            <div class="name">儿童防龋</div>
+          </div>
+          <div class="content">
+            <p>（冷酸灵贝乐乐科研防龋儿童牙膏(草莓味)）</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./rem.js"></script>
+
+    <script>
+      window.onload = () => {
+        const socket = new WebSocket("wss://zt.dencare.com.cn/wss");
+        socket.onmessage = (e) => {
+          // console.log("message", e);
+        };
+
+        socket.onopen = (e) => {
+          console.log("open", e);
+        };
+
+        let list = document.querySelectorAll(".mitem");
+        list.forEach((item, index) => {
+          item.addEventListener("click", (e) => {
+            list.forEach((item2, index2) => {
+              if (index !== index2) {
+                item2.classList.remove("Actv");
+              } else if (!item2.classList.contains("Actv")) {
+                item2.classList.add("Actv");
+              }
+              if (index === index2) {
+                socket.send(
+                  JSON.stringify({
+                    page: index + 1,
+                  }),
+                );
+              }
+            });
+          });
+        });
+      };
+    </script>
+  </body>
+</html>
