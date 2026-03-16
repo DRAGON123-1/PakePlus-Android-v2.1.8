@@ -1,11 +1,90 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>PakePlus</title>
-    </head>
-    <body>
-        PakePlus
-    </body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="divport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style scoped lang="scss">
+      .dialog-choose {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 500;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .dialogContent {
+        background-color: #fff;
+        border-radius: 0.1rem;
+        padding: 0.3rem;
+        width: 6rem;
+        position: relative;
+        z-index: 1;
+      }
+      .mask {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+      }
+      .title {
+        font-size: 0.26rem;
+        color: #333;
+        font-weight: bold;
+        text-align: center;
+        margin: 0 auto 0.3rem;
+      }
+      .content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        column-gap: 0.3rem;
+      }
+      .itemBox {
+        font-size: 0.24rem;
+        color: #333;
+        font-weight: bold;
+        width: 1rem;
+        height: 1.5rem;
+        background-color: #f8f8f8;
+        border-radius: 0.1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dialog-choose">
+      <div class="mask"></div>
+      <div class="dialogContent">
+        <div class="title">选择页面</div>
+        <div class="content">
+          <div class="itemBox" data-index="0">左边页面</div>
+          <div class="itemBox" data-index="1">右边页面</div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./rem.js"></script>
+
+    <script>
+      let btns = document.querySelectorAll(".itemBox");
+      btns.forEach((item) => {
+        item.addEventListener("click", (e) => {
+          let index = e.target.dataset.index;
+          if (index == 0) {
+            window.location.href = "./leftPage.html";
+          } else {
+            window.location.href = "./rightPage.html";
+          }
+        });
+      });
+    </script>
+  </body>
 </html>
